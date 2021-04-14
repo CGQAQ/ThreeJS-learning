@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"
+      integrity="sha512-U4J4PbEJ2TMjFqPUSiKq7LLTHuEkPZVo0jl2fomi9pT7UAExh4xVi8KmoR7EfmyigH95aA68zpW7y3XzuoSurQ=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r111/three.min.js"
+      integrity="sha512-RG+pkLebMES0QY7FgSmrZhOG8mBojC5MYirt3pvXm3oiesgYUL1EJMCpKJAMDK7ecHx4F3/RtPqza1n/JyXT+Q=="
+      crossorigin="anonymous"
+    ></script> -->
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const scene = new THREE.Scene()
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      )
+
+      const renderer = new THREE.WebGLRenderer()
+      renderer.setSize(window.innerWidth, window.innerHeight)
+
+      document.body.appendChild(renderer.domElement)
+
+      const geometry = new THREE.BoxGeometry(200, 200, 200)
+
+      //   Set random colours for each of the 6 faces :)
+      const materials = []
+      for (const _ of geometry.groups) {
+        materials.push(
+          new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff })
+        )
+      }
+      const mesh = new THREE.Mesh(geometry, materials)
+
+      scene.add(mesh)
+
+      camera.position.z = 500
+
+      function animate() {
+        mesh.rotation.x += 0.01
+        mesh.rotation.y += 0.01
+        renderer.render(scene, camera)
+        requestAnimationFrame(animate)
+      }
+      animate()
+    </script>
+  </body>
+</html>
